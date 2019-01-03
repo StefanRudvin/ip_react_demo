@@ -19,7 +19,7 @@ export default class NavBar extends Component {
                         <div className="section">
                             <div className="tabs is-centered">
                                 <ul>
-                                    <li className={this.getPathParam() === "" ? "is-active" : ""}><Link to="/">Home</Link></li>
+                                    <li className={this.getPathParam() === "" ? "is-active" : ""}><Link to="/">Profile</Link></li>
                                     <li className={this.getPathParam() === "graph" ? "is-active" : ""}><Link to="/graph">Graph</Link></li>
                                     <li className={this.getPathParam() === "login" ? "is-active" : ""}><Link to="/login">Login</Link></li>
                                     <li className={this.getPathParam() === "receive" ? "is-active" : ""}><Link to="/receive">Receive</Link></li>

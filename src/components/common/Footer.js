@@ -8,10 +8,10 @@ export default class Footer extends Component {
                     <hr/>
                     <a className="nav-item" href="http://github.com/plasticneko">
                       <span className="icon">
-                        <i className="fa fa-github"></i>
+                        <i className="fa fa-github" />
                       </span>
                     </a>
-                    <p>Stefan Rudvin</p>
+                    <p>IntelligentPlant</p>
                 </div>
             </div>
         );

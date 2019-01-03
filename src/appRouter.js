@@ -1,11 +1,11 @@
 import { BrowserRouter as Router, Route, } from "react-router-dom";
 import ReceiveFromIP from './components/oauth/receiver'
 import SendToIP from './components/oauth/sender'
-import NavBar from './components/views/NavBar'
-import Footer from './components/views/Footer'
-import Home from './components/views/Home'
+import NavBar from './components/common/NavBar'
+import Footer from './components/common/Footer'
+import Home from './components/views/Profile'
 import React from "react";
-import GraphView from './components/views/GraphView'
+import GraphView from './components/views/Graphs'
 
 const AppRouter = () => (
     <Router>

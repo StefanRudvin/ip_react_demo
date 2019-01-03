@@ -4,12 +4,6 @@ import Graph from '../Graph'
 
 export default class GraphView extends Component {
 
-    constructor (props) {
-        super(props)
-        this.state = {
-        }
-    }
-
     render () {
         return (
             <div>

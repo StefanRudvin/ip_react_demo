@@ -1,20 +1,21 @@
+import { IPService } from '../service/IPService'
 import React, { Component } from 'react'
-import axios from 'axios'
-import moment from 'moment'
 import { Line } from 'react-chartjs-2'
+import moment from 'moment'
 
-export default class Graph extends Component {
+export default class Graphs extends Component {
 
     constructor (props) {
         super(props)
         this.state = {
-            data_sources: [],
-            current_tag_name: '',
-            current_source_name: '',
-            current_source_data: [],
-            historical_data: [],
-            source_dropdown_open: false,
-            tag_dropdown_open: false,
+            service: new IPService(),
+            dataSources: [],
+            currentTagName: '',
+            currentSourceName: '',
+            currentSourceData: [],
+            historicalData: [],
+            sourceDropdownOpen: false,
+            tagDropdownOpen: false,
             options: {
                 legend: {
                     display: false
@@ -40,34 +41,24 @@ export default class Graph extends Component {
 
     componentWillMount () {
         let self = this
-
-        axios.get(process.env.REACT_APP_DATASOURCES_URL)
-            .then(function (response) {
-                self.setState({data_sources: response.data})
-            })
+        this.state.service.getDataSources((res) => self.setState({dataSources: res}))
     }
 
-    toggleSourceDropDown () {
-        this.setState({source_dropdown_open: !this.state.source_dropdown_open})
-    }
+    toggleSourceDropDown () { this.setState({sourceDropdownOpen: !this.state.sourceDropdownOpen}) }
 
-    toggleTagDropDown () {
-        this.setState({tag_dropdown_open: !this.state.tag_dropdown_open})
-    }
+    toggleTagDropDown () { this.setState({tagDropdownOpen: !this.state.tagDropdownOpen}) }
 
     setAndGetCurrentSourceData (qualifiedName) {
-        console.log(qualifiedName)
-        this.setState({current_source_name: qualifiedName})
+        this.setState({currentSourceName: qualifiedName})
         this.getCurrentSourceData(qualifiedName)
         this.toggleSourceDropDown()
     }
 
     setAndGetCurrentTagData (tagName) {
-        console.log(tagName)
         this.toggleTagDropDown()
 
         this.setState({
-            current_tag_name: tagName
+            currentTagName: tagName
         }, () => {
             this.getHistoricalData()
         })
@@ -75,39 +66,15 @@ export default class Graph extends Component {
 
     getCurrentSourceData (qualifiedName) {
         let self = this
-        axios.post(
-            'https://appstore.intelligentplant.com/gestalt/api/data/tags/' + qualifiedName,
-            {
-                'pageSize': 10,
-                'page': 1,
-                'name': '*'
-            })
-            .then(function (response) {
-                self.setState({current_source_data: response.data})
-                console.log(response.data)
-            })
+        this.state.service.getDataSource(qualifiedName, (res) => self.setState({currentSourceData: res}))
     }
 
     getHistoricalData () {
         let self = this
-
-        axios.post(
-            'https://appstore.intelligentplant.com/gestalt/api/data/v2/history',
-            {
-                'tags': {
-                    [self.state.current_source_name]: [
-                        self.state.current_tag_name
-                    ],
-                },
-                'dataFunction': 'AVG',
-                'StartTime': '*-7d',
-                'EndTime': '*',
-                'sampleInterval': '12h'
-            })
-            .then(function (response) {
-                self.setState({historical_data: response.data})
-                self.processChartData(response.data)
-            })
+        this.state.service.getHistoricalData(self.state.currentSourceName, self.state.currentTagName, (res) => {
+            self.setState({historicalData: res})
+            self.processChartData()
+        })
     }
 
     processChartData () {
@@ -115,37 +82,31 @@ export default class Graph extends Component {
         data.labels = []
         data.datasets = []
 
-        let dataset = []
-        dataset.data = []
-        dataset.label = this.state.current_source_name
+        let dataSet = []
+        dataSet.data = []
+        dataSet.label = this.state.currentSourceName
 
-        dataset.borderColor = []
-        dataset.borderColor.push('crimson')
-        dataset.borderWidth = 1
+        dataSet.borderColor = []
+        dataSet.borderColor.push('crimson')
+        dataSet.borderWidth = 1
 
-        let historical_data = this.state.historical_data
+        let historicalData = this.state.historicalData
 
-        console.log(historical_data[Object.keys(historical_data)[0]])
-
-        let next_step = historical_data[Object.keys(historical_data)[0]]
-        let wazaa = next_step[Object.keys(next_step)[0]]
-        let values = wazaa.Values
-
-        console.log('Values:')
-        console.log(values)
+        let firstChild = historicalData[Object.keys(historicalData)[0]]
+        let secondChild = firstChild[Object.keys(firstChild)[0]]
+        let values = secondChild.Values
 
         values.forEach(function (value) {
             data.labels.push(moment(value.UtcSampleTime).format('ddd, hA'))
-            dataset.data.push(value.NumericValue)
+            dataSet.data.push(value.NumericValue)
         })
-        console.log(dataset)
-        data.datasets.push(dataset)
 
+        data.datasets.push(dataSet)
         this.setState({data: data})
     }
 
     render () {
-        const datasource_items = this.state.data_sources.map((source) =>
+        const datasourceItems = this.state.dataSources.map((source) =>
             <div>
                 <a onClick={() => this.setAndGetCurrentSourceData(source.Name.QualifiedName)} className="dropdown-item">
                     {source.Name.QualifiedName}
@@ -154,7 +115,7 @@ export default class Graph extends Component {
             </div>
         )
 
-        const tag_items = this.state.current_source_data.map((tag) =>
+        const tagItems = this.state.currentSourceData.map((tag) =>
             <div>
                 <a onClick={() => this.setAndGetCurrentTagData(tag.Id)} className="dropdown-item">
                     {tag.Id}
@@ -169,11 +130,11 @@ export default class Graph extends Component {
                     <div className="notification">
                         <h1>Choose Data</h1>
 
-                        <div className={this.state.source_dropdown_open === true ? 'dropdown is-active' : 'dropdown'}>
+                        <div className={this.state.sourceDropdownOpen === true ? 'dropdown is-active' : 'dropdown'}>
                             <div className="dropdown-trigger">
                                 <button className="button" onClick={this.toggleSourceDropDown.bind(this)}
                                         aria-haspopup="true" aria-controls="dropdown-menu2">
-                                    <span>{this.state.current_source_name === '' ? 'Select DataSource' : this.state.current_source_name}</span>
+                                    <span>{this.state.currentSourceName === '' ? 'Select DataSource' : this.state.currentSourceName}</span>
                                     <span className="icon is-small">
                                             <i className="fa fa-angle-down" aria-hidden="true"/>
                                         </span>
@@ -181,16 +142,16 @@ export default class Graph extends Component {
                             </div>
                             <div className="dropdown-menu" id="dropdown-menu2" role="menu">
                                 <div className="dropdown-content">
-                                    {datasource_items}
+                                    {datasourceItems}
                                 </div>
                             </div>
                         </div>
 
-                        <div className={this.state.tag_dropdown_open === true ? 'dropdown is-active' : 'dropdown'}>
+                        <div className={this.state.tagDropdownOpen === true ? 'dropdown is-active' : 'dropdown'}>
                             <div className="dropdown-trigger">
                                 <button className="button" onClick={this.toggleTagDropDown.bind(this)}
                                         aria-haspopup="true" aria-controls="dropdown-menu2">
-                                    <span>{this.state.current_tag_name === '' ? 'Select Tag' : this.state.current_tag_name}</span>
+                                    <span>{this.state.currentTagName === '' ? 'Select Tag' : this.state.currentTagName}</span>
                                     <span className="icon is-small">
                                             <i className="fa fa-angle-down" aria-hidden="true"/>
                                         </span>
@@ -198,7 +159,7 @@ export default class Graph extends Component {
                             </div>
                             <div className="dropdown-menu" id="dropdown-menu2" role="menu">
                                 <div className="dropdown-content">
-                                    {tag_items}
+                                    {tagItems}
                                 </div>
                             </div>
                         </div>

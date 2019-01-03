@@ -1,54 +1,28 @@
 import React, { Component } from 'react'
-import axios from 'axios'
+import { IPService } from '../../service/IPService'
 
-export default class Home extends Component {
+export default class Profile extends Component {
 
     constructor (props) {
         super(props)
         this.state = {
-            data_sources: [],
+            dataSources: [],
             user: {
                 picture: '',
-                verified_email: true
+                verifiedEmail: true
             },
-            data: {}
+            service: new IPService()
         }
     }
 
-    componentWillMount () {
+    componentDidMount () {
         let self = this
-        axios.get(process.env.REACT_APP_INFO_URL)
-            .then(function (response) {
-                self.setState({user: JSON.parse(response.data.InfoAll)})
-                console.log(self.state.user)
-            })
-
-        axios.get(process.env.REACT_APP_DATASOURCES_URL)
-            .then(function (response) {
-                self.setState({data_sources: response.data})
-                self.getData()
-            })
-    }
-
-    getData() {
-        let self = this
-        axios.post(
-            "https://appstore.intelligentplant.com/gestalt/api/data/tags/" + this.state.data_sources[0].Name.QualifiedName,
-            {
-                "pageSize": 10,
-                "page": 1,
-                "name": "*"
-            })
-            .then(function (response) {
-                self.setState({data: response.data})
-                console.log(self.state.data_sources)
-            })
-
+        this.state.service.getUserInfo((res) => self.setState({user: JSON.parse(res)}))
+        this.state.service.getDataSources((res) => self.setState({dataSources: res}))
     }
 
     render () {
-
-        const datasource_items = this.state.data_sources.map((source) =>
+        const dataSourceItems = this.state.dataSources.map((source) =>
             <li key={source.Name.DisplayName}>
                 <p><b>{source.Name.DisplayName}</b></p>
                 <p>Uptime: {source.Status.Uptime}</p>
@@ -93,7 +67,7 @@ export default class Home extends Component {
                                 Locale: {this.state.user.locale}
                             </p>
                             <p>
-                                Verified: {this.state.user.verified_email}
+                                Verified: {this.state.user.verifiedEmail}
                             </p>
                             <p>
                                 Link: {this.state.user.link}
@@ -103,7 +77,7 @@ export default class Home extends Component {
                     <div className="container is-fluid">
                         <div className="notification">
                             <ul>
-                                {datasource_items}
+                                {dataSourceItems}
                             </ul>
                         </div>
                     </div>
