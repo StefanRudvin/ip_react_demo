@@ -18,9 +18,7 @@ export class IPService {
         axios.get(process.env.REACT_APP_USER_INFO_URL)
             .then(function (response) {
                 self.userInfo = response.data.InfoAll
-                if (typeof callback === "function") {
-                    callback(response.data.InfoAll)
-                }
+                if (typeof callback === "function") callback(response.data.InfoAll)
             })
     }
 
@@ -29,9 +27,7 @@ export class IPService {
         axios.get(process.env.REACT_APP_DATASOURCES_URL)
             .then(function (response) {
                 self.dataSources = response.data
-                if (typeof callback === "function") {
-                    callback(response.data)
-                }
+                if (typeof callback === "function") callback(response.data)
             })
     }
 
@@ -43,27 +39,28 @@ export class IPService {
                 'name': '*'
             })
             .then(function (response) {
-                if (typeof callback === "function") {
-                    callback(response.data)
-                }
+                if (typeof callback === "function") callback(response.data)
             })
     }
 
     getHistoricalData(dataSource, dataTag, callback = null) {
-        axios.post( process.env.REACT_APP_HISTORICAL_URL,
-            {
-                'tags': {
-                    [dataSource]: [
-                        dataTag
-                    ],
-                },
-                'dataFunction': 'AVG',
-                'StartTime': '*-7d',
-                'EndTime': '*',
-                'sampleInterval': '12h'
-            })
+
+        // let obj = new
+        const query = {
+            tags: {
+                [dataSource]: [
+                    dataTag
+                ],
+            },
+            dataFunction : 'AVG',
+            StartTime : '*-7d',
+            EndTime : '*',
+            sampleInterval : '12h'
+        };
+
+        axios.post(process.env.REACT_APP_HISTORICAL_URL, query)
             .then(function (response) {
-                callback(response.data)
+                if (typeof callback === "function") callback(response.data)
             })
     }
 }

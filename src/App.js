@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import AppRouter from './appRouter'
 import 'bulma/css/bulma.css'
-import './service/InterCeptor'
+import './service/TokenInterceptor'
+import EventEmitter from './service/EventEmitter'
 
 class App extends Component {
   render() {

@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
+import { IPService } from '../../service/IPService'
 
-import Graph from '../Graph'
-
-export default class GraphView extends Component {
-
+export default class Profile extends Component {
     render () {
         return (
             <div>
@@ -11,19 +9,15 @@ export default class GraphView extends Component {
                     <div className="hero-body">
                         <div className="container">
                             <h1 className="title">
-                                Graph
+                                Welcome!
                             </h1>
                             <h2 className="subtitle">
-                                Your datasource information
+                                Please Login:
+                                XXXX
                             </h2>
                         </div>
                     </div>
                 </section>
-
-                <Graph/>
-                <Graph/>
-                <Graph/>
-                <Graph/>
             </div>
         )
     }

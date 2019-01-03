@@ -107,7 +107,7 @@ export default class Graphs extends Component {
 
     render () {
         const datasourceItems = this.state.dataSources.map((source) =>
-            <div>
+            <div key={source.Name.QualifiedName}>
                 <a onClick={() => this.setAndGetCurrentSourceData(source.Name.QualifiedName)} className="dropdown-item">
                     {source.Name.QualifiedName}
                 </a>
@@ -116,7 +116,7 @@ export default class Graphs extends Component {
         )
 
         const tagItems = this.state.currentSourceData.map((tag) =>
-            <div>
+            <div key={tag.Id}>
                 <a onClick={() => this.setAndGetCurrentTagData(tag.Id)} className="dropdown-item">
                     {tag.Id}
                 </a>

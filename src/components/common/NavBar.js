@@ -1,11 +1,46 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import LoginListItem from './LoginListItem'
+import { AuthService } from '../../service/AuthService'
+import EventEmitter from '../../service/EventEmitter'
 
 export default class NavBar extends Component {
-    getPathParam() {
+
+    constructor (props) {
+        super(props)
+        this.state = {
+            authService : new AuthService(),
+            isAuthenticated : false
+        }
+    }
+
+    static getPathParam() {
         return window.location.pathname.slice(1)
     }
+
+    checkAuth() {
+        this.setState({isAuthenticated: this.state.authService.isLoggedIn()})
+    }
+
+    componentDidMount () {
+        this.checkAuth()
+        EventEmitter.on('onAuthChange', () => {
+            this.checkAuth()
+        })
+    }
+
     render() {
+        let ProfileListItem = null;
+        let GraphListItem = null;
+
+        if (this.state.isAuthenticated) {
+            ProfileListItem = <li className={NavBar.getPathParam() === "profile" ? "is-active" : ""}><Link to="/profile">Profile</Link></li>
+            GraphListItem = <li className={NavBar.getPathParam() === "graph" ? "is-active" : ""}><Link to="/graph">Graph</Link></li>
+        } else {
+            ProfileListItem = null
+            GraphListItem = null
+        }
+
         return (
             <div className="hero-head">
                 <header>
@@ -19,10 +54,12 @@ export default class NavBar extends Component {
                         <div className="section">
                             <div className="tabs is-centered">
                                 <ul>
-                                    <li className={this.getPathParam() === "" ? "is-active" : ""}><Link to="/">Profile</Link></li>
-                                    <li className={this.getPathParam() === "graph" ? "is-active" : ""}><Link to="/graph">Graph</Link></li>
-                                    <li className={this.getPathParam() === "login" ? "is-active" : ""}><Link to="/login">Login</Link></li>
-                                    <li className={this.getPathParam() === "receive" ? "is-active" : ""}><Link to="/receive">Receive</Link></li>
+                                    <li className={NavBar.getPathParam() === "" ? "is-active" : ""}><Link to="/">Welcome</Link></li>
+                                    {ProfileListItem}
+                                    {GraphListItem}
+                                    <li className={NavBar.getPathParam() === "login" || NavBar.getPathParam() === "receive" ? "is-active" : ""}>
+                                        <LoginListItem />
+                                    </li>
                                 </ul>
                             </div>
                         </div>
