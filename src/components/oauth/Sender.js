@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
 import { OauthSender } from 'react-oauth-flow';
+import React, { Component } from 'react';
 
 export default class SendToIP extends Component {
     render() {
@@ -14,7 +14,6 @@ export default class SendToIP extends Component {
                             authorizeUrl={process.env.REACT_APP_IP_BASE_URL + process.env.REACT_APP_IP_AUTH_URL}
                             clientId={encodeURIComponent(process.env.REACT_APP_CLIENT_ID)}
                             redirectUri={process.env.REACT_APP_API_URL + 'receive'}
-                            // state={{ from: '/' }}
                             args={{
                                 'scope':
                                     'UserInfo DataRead AccountDebit'

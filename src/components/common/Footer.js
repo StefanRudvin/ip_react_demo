@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import logo from './../../assets/appstore.png'
+import logo from '../../assets/Appstore.png'
 
 export default class Footer extends Component {
     render () {

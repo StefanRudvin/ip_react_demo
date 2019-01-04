@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './css/App.scss';
-import AppRouter from './appRouter'
+import AppRouter from './AppRouter'
 import 'bulma/css/bulma.css'
 import './service/TokenInterceptor'
 

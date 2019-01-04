@@ -1,14 +1,14 @@
 import { BrowserRouter as Router, Route, } from "react-router-dom";
 import ReceiveFromIP from './components/oauth/Receiver'
+import RealTime from './components/views/RealTime'
 import GraphView from './components/views/Graphs'
 import SendToIP from './components/oauth/Sender'
-import NavBar from './components/common/NavBar'
-import Footer from './components/common/Footer'
 import Profile from './components/views/Profile'
 import Welcome from './components/views/Welcome'
+import NavBar from './components/common/NavBar'
+import Footer from './components/common/Footer'
 import Logout from './components/oauth/Logout'
 import React from "react";
-import RealTime from './components/views/RealTime'
 
 const AppRouter = () => (
     <Router>

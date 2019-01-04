@@ -44,7 +44,6 @@ export class IPService {
     }
 
     getHistoricalData(dataSource, dataTag, callback = null) {
-
         // let obj = new
         const query = {
             tags: {

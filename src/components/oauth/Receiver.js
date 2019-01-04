@@ -1,7 +1,7 @@
+import { AuthService } from '../../service/AuthService'
 import React, { Component } from 'react'
 import axios from 'axios'
 import qs from 'qs'
-import { AuthService } from '../../service/AuthService'
 
 export default class ReceiveFromIP extends Component {
 

@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { Link } from "react-router-dom";
-import LoginListItem from './LoginListItem'
 import { AuthService } from '../../service/AuthService'
 import EventEmitter from '../../service/EventEmitter'
+import LoginListItem from './LoginListItem'
+import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 
 export default class NavBar extends Component {
 

@@ -148,7 +148,6 @@ export default class Graphs extends Component {
                                 </div>
                             </div>
                         </div>
-
                         <div className={this.state.tagDropdownOpen === true ? 'dropdown is-active' : 'dropdown'}>
                             <div className="dropdown-trigger">
                                 <button className="button" onClick={this.toggleTagDropDown.bind(this)}
@@ -166,8 +165,6 @@ export default class Graphs extends Component {
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
         )
