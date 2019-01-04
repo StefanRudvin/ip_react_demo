@@ -8,7 +8,6 @@ The current http client is [Axios](https://github.com/axios/axios), but it can b
 
 The auth token is stored in local storage, which to be moved elsewhere when building for production due to security concerns.
 
-
 ## Installation:
 
 * Copy your IntelligentPlant `Client ID` and `Client Secret` to `.env.example` and rename it to `.env`
@@ -16,3 +15,6 @@ The auth token is stored in local storage, which to be moved elsewhere when buil
 * `npm install`
 
 * `npm start`
+
+
+![Screenshot](https://github.com/intelligentplant/ip_react_demo/blob/master/src/assets/App-screenshot.png)
