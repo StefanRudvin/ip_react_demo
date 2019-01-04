@@ -72,7 +72,7 @@ export default class RealTime extends Component {
         hubProxy.on('valuesReceived', function (sourceName, tagValues) {
             console.log(sourceName)
             console.log(tagValues)
-            swal(tagValues[0].TextValue)
+            swal("New real time value for " + sourceName + ":", tagValues[0].TextValue)
         })
 
         connection.start({json: true})
