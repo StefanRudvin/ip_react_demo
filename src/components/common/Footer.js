@@ -1,19 +1,17 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import logo from './../../assets/appstore.png'
 
 export default class Footer extends Component {
-    render() {
+    render () {
         return (
             <div className="hero-foot footer-custom">
                 <div className="container has-text-centered">
                     <hr/>
-                    <a className="nav-item" href="http://github.com/plasticneko">
-                      <span className="icon">
-                        <i className="fa fa-github" />
-                      </span>
-                    </a>
-                    <p>IntelligentPlant</p>
+                    <p>
+                        <img src={logo} className="logo"/>
+                    </p>
                 </div>
             </div>
-        );
+        )
     }
 }

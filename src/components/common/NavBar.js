@@ -42,11 +42,11 @@ export default class NavBar extends Component {
         }
 
         return (
-            <div className="hero-head">
-                <header>
+            <section className="hero is-ip-dark-orange is-medium is-large">
+                <div className="hero-head">
                     <div className="container">
                         <div className="section">
-                            <div className="has-text-centered">
+                            <div className="has-text-centered title">
                                 <h1 className="title is-1 is-spaced">Intelligent Plant</h1>
                                 <h4 className="subtitle is-4">React Demo App</h4>
                             </div>
@@ -64,8 +64,8 @@ export default class NavBar extends Component {
                             </div>
                         </div>
                     </div>
-                </header>
-            </div>
+                </div>
+            </section>
         );
     }
 }

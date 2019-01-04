@@ -1,0 +1,43 @@
+/** primary palette */
+$ip-primary-green: #7ac143;
+$ip-primary-dark-grey: #717073;
+$ip-primary-light-grey: #9c9b9d;
+
+/** secondary palette */
+$ip-secondary-light-orange: #ff9933;
+$ip-secondary-dark-orange: #ff6600;
+$ip-secondary-black: #000000;
+$ip-secondary-dark-grey: #afabab;
+$ip-secondary-light-grey: #e7e6e6;
+
+.is-ip-green {
+  background-color: $ip-primary-green;
+}
+
+.is-ip-dark-grey {
+  background-color: $ip-primary-dark-grey;
+}
+
+.is-ip-light-grey {
+  background-color: $ip-primary-light-grey;
+}
+
+.is-ip-light-orange {
+  background-color: $ip-secondary-light-orange;
+}
+
+.is-ip-dark-orange {
+  background-color: $ip-secondary-dark-orange;
+}
+
+.is-ip-black {
+  background-color: $ip-secondary-black;
+}
+
+.is-ip-secondary-dark-grey {
+  background-color: $ip-secondary-dark-grey;
+}
+
+.is-ip-secondary-light-grey {
+  color: $ip-secondary-light-grey;
+}

@@ -20,9 +20,15 @@ export default class logout extends Component {
 
     render() {
         return (
-            <div>
-                <h1>You have successfully been logged out.</h1>
-            </div>
+            <section className="hero is-dark">
+                <div className="hero-body">
+                    <div className="container">
+                        <h1 className="title">
+                            You have logged out.
+                        </h1>
+                    </div>
+                </div>
+            </section>
         );
     }
 }

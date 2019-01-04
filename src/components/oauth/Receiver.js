@@ -14,11 +14,15 @@ export default class ReceiveFromIP extends Component {
     }
 
     componentWillMount () {
-        this.fetchToken()
+        if (this.state.authService.isLoggedIn()) {
+            this.setState({isAuthenticated: true})
+        } else {
+            this.fetchToken()
+        }
     }
 
     fetchToken () {
-        let self = this;
+        let self = this
 
         const url = process.env.REACT_APP_IP_BASE_URL + process.env.REACT_APP_IP_TOKEN_URL
         const data = {
@@ -38,23 +42,23 @@ export default class ReceiveFromIP extends Component {
         axios(options).then((res) => {
             self.setState({isAuthenticated: true})
             ReceiveFromIP.saveToken(res.data.access_token, self)
-        });
+        })
     }
 
-    static saveToken(token, self) {
-        self.state.authService.logIn(token);
+    static saveToken (token, self) {
+        self.state.authService.logIn(token)
     }
 
     render () {
-        const isAuthenticated = this.state.isAuthenticated;
-        let message;
+        const isAuthenticated = this.state.isAuthenticated
+        let message
 
         if (isAuthenticated) {
             message = (
                 <div>
-                    You have successfully been logged in!
+                    You have logged in!
                 </div>
-            );
+            )
         } else {
             message = (
                 <div>
@@ -64,9 +68,15 @@ export default class ReceiveFromIP extends Component {
         }
 
         return (
-            <div>
-                {message}
-            </div>
+            <section className="hero is-dark">
+                <div className="hero-body">
+                    <div className="container">
+                        <h1 className="title">
+                            {message}
+                        </h1>
+                    </div>
+                </div>
+            </section>
         )
     }
 }

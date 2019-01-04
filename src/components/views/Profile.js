@@ -9,7 +9,12 @@ export default class Profile extends Component {
             dataSources: [],
             user: {
                 picture: '',
-                verifiedEmail: true
+                verifiedEmail: true,
+                id: 'XXX',
+                link: 'XXX',
+                verifiedEmail: 'XXX',
+                email: 'XXX',
+                locale: 'XXX'
             },
             service: new IPService()
         }

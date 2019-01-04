@@ -87,7 +87,7 @@ export default class Graphs extends Component {
         dataSet.label = this.state.currentSourceName
 
         dataSet.borderColor = []
-        dataSet.borderColor.push('crimson')
+        dataSet.borderColor.push('green')
         dataSet.borderWidth = 1
 
         let historicalData = this.state.historicalData
@@ -126,8 +126,10 @@ export default class Graphs extends Component {
 
         return (
             <div className="columns">
-                <div className="container is-fluid">
-                    <div className="notification">
+                <div className="container">
+                    <div className="notification graph">
+                        <h1>Graph of last week</h1>
+                        <Line data={this.state.data} options={this.state.options} width={800} height={300}/>
                         <h1>Choose Data</h1>
 
                         <div className={this.state.sourceDropdownOpen === true ? 'dropdown is-active' : 'dropdown'}>
@@ -164,13 +166,8 @@ export default class Graphs extends Component {
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div className="container is-fluid">
-                    <div className="notification">
-                        <h1>Graph of last week</h1>
-                    </div>
-                    <Line data={this.state.data} options={this.state.options} width={800} height={300}/>
+
                 </div>
             </div>
         )
