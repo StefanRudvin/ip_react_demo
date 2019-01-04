@@ -12,7 +12,6 @@ export default class Profile extends Component {
                 verifiedEmail: true,
                 id: 'XXX',
                 link: 'XXX',
-                verifiedEmail: 'XXX',
                 email: 'XXX',
                 locale: 'XXX'
             },

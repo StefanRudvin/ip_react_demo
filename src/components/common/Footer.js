@@ -8,7 +8,7 @@ export default class Footer extends Component {
                 <div className="container has-text-centered">
                     <hr/>
                     <p>
-                        <img src={logo} className="logo"/>
+                        <img alt={"logo"} src={logo} className="logo"/>
                     </p>
                 </div>
             </div>

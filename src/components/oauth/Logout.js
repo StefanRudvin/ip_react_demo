@@ -6,7 +6,6 @@ export default class logout extends Component {
     constructor (props) {
         super(props)
         this.state = {
-            authService : new AuthService()
         }
     }
 
@@ -14,8 +13,8 @@ export default class logout extends Component {
         this.logOut()
     }
 
-    logOut() {
-        this.state.authService.logOut()
+    static logOut() {
+        AuthService.logOut()
     }
 
     render() {

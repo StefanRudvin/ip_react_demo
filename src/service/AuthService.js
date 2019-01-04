@@ -12,16 +12,20 @@ export class AuthService {
         this.token = null;
     }
 
-    isLoggedIn() {
+    static isLoggedIn() {
         return localStorage.getItem('token');
     }
 
-    logIn(token) {
+    static getToken() {
+        return localStorage.getItem('token');
+    }
+
+    static logIn(token) {
         localStorage.setItem('token', token);
         EventEmitter.emit('onAuthChange')
     }
 
-    logOut() {
+    static logOut() {
         localStorage.removeItem('token');
         EventEmitter.emit('onAuthChange')
     }

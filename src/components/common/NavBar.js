@@ -9,7 +9,6 @@ export default class NavBar extends Component {
     constructor (props) {
         super(props)
         this.state = {
-            authService : new AuthService(),
             isAuthenticated : false
         }
     }
@@ -19,7 +18,7 @@ export default class NavBar extends Component {
     }
 
     checkAuth() {
-        this.setState({isAuthenticated: this.state.authService.isLoggedIn()})
+        this.setState({isAuthenticated: AuthService.isLoggedIn()})
     }
 
     componentDidMount () {
@@ -55,6 +54,7 @@ export default class NavBar extends Component {
                             <div className="tabs is-centered">
                                 <ul>
                                     <li className={NavBar.getPathParam() === "" ? "is-active" : ""}><Link to="/">Welcome</Link></li>
+                                    <li className={NavBar.getPathParam() === "realtime" ? "is-active" : ""}><Link to="/realtime">Realtime</Link></li>
                                     {ProfileListItem}
                                     {GraphListItem}
                                     <li className={NavBar.getPathParam() === "login" || NavBar.getPathParam() === "receive" ? "is-active" : ""}>

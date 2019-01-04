@@ -8,13 +8,12 @@ export default class LoginListItem extends Component {
     constructor (props) {
         super(props)
         this.state = {
-            authService : new AuthService(),
             isAuthenticated : false
         }
     }
 
     checkAuth() {
-        this.setState({isAuthenticated: this.state.authService.isLoggedIn()})
+        this.setState({isAuthenticated: AuthService.isLoggedIn()})
     }
 
     componentDidMount () {

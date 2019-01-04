@@ -9,16 +9,19 @@
     "bulma": "^0.7.2",
     "chart.js": "^2.7.3",
     "install": "^0.12.2",
+    "jquery": "^3.3.1",
     "moment": "^2.23.0",
     "node-sass": "^4.11.0",
     "npm": "^6.5.0",
     "react": "^16.7.0",
-    "react-addons-css-transition-group": "^15.6.2",
     "react-chartjs-2": "^2.7.4",
     "react-dom": "^16.7.0",
     "react-oauth-flow": "^1.2.0",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "2.1.1"
+    "react-scripts": "2.1.1",
+    "signalr": "^2.4.0",
+    "signalr-no-jquery": "^0.1.8",
+    "sweetalert": "^2.1.2"
   },
   "scripts": {
     "start": "react-scripts start",

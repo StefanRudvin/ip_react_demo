@@ -41,7 +41,7 @@ export default class GraphView extends Component {
                         <Graph key={graph.id} name={graph.name}/>
                     ))
                 }
-                <a className="button is-success" onClick={this.addGraph.bind(this)}>Add Graph</a>
+                <div className="button is-success" onClick={this.addGraph.bind(this)}>Add Graph</div>
             </div>
         )
     }

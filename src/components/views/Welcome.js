@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { IPService } from '../../service/IPService'
 
 export default class Profile extends Component {
     render () {

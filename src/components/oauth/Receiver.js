@@ -9,12 +9,11 @@ export default class ReceiveFromIP extends Component {
         super(props)
         this.state = {
             isAuthenticated: false,
-            authService: new AuthService()
         }
     }
 
     componentWillMount () {
-        if (this.state.authService.isLoggedIn()) {
+        if (AuthService.isLoggedIn()) {
             this.setState({isAuthenticated: true})
         } else {
             this.fetchToken()
@@ -46,7 +45,7 @@ export default class ReceiveFromIP extends Component {
     }
 
     static saveToken (token, self) {
-        self.state.authService.logIn(token)
+        AuthService.logIn(token)
     }
 
     render () {
