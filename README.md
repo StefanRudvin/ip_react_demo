@@ -12,6 +12,8 @@ The auth token is stored in local storage, which to be moved elsewhere when buil
 
 * Copy your IntelligentPlant `Client ID` and `Client Secret` to `.env.example` and rename it to `.env`
 
+* Add `http://localhost:3000/receive` to your Authorized Redirect Urls in your IntelligentPlant application
+
 * `npm install`
 
 * `npm start`
