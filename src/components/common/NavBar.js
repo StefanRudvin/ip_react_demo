@@ -31,13 +31,16 @@ export default class NavBar extends Component {
     render() {
         let ProfileListItem = null;
         let GraphListItem = null;
+		let RealTimeListItem = null;
 
         if (this.state.isAuthenticated) {
             ProfileListItem = <li className={NavBar.getPathParam() === "profile" ? "is-active" : ""}><Link to="/profile">Profile</Link></li>
             GraphListItem = <li className={NavBar.getPathParam() === "graph" ? "is-active" : ""}><Link to="/graph">Graph</Link></li>
+			RealTimeListItem =  <li className={NavBar.getPathParam() === "realtime" ? "is-active" : ""}><Link to="/realtime">Realtime</Link></li>
         } else {
             ProfileListItem = null
             GraphListItem = null
+			RealTimeListItem = null
         }
 
         return (
@@ -54,9 +57,9 @@ export default class NavBar extends Component {
                             <div className="tabs is-centered">
                                 <ul>
                                     <li className={NavBar.getPathParam() === "" ? "is-active" : ""}><Link to="/">Welcome</Link></li>
-                                    <li className={NavBar.getPathParam() === "realtime" ? "is-active" : ""}><Link to="/realtime">Realtime</Link></li>
                                     {ProfileListItem}
                                     {GraphListItem}
+									{RealTimeListItem}
                                     <li className={NavBar.getPathParam() === "login" || NavBar.getPathParam() === "receive" ? "is-active" : ""}>
                                         <LoginListItem />
                                     </li>

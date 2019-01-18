@@ -13,7 +13,7 @@ export default class logout extends Component {
         this.logOut()
     }
 
-    static logOut() {
+    logOut() {
         AuthService.logOut()
     }
 
