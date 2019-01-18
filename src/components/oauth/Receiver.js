@@ -27,9 +27,9 @@ export default class ReceiveFromIP extends Component {
         const data = {
             code: window.location.search.slice(6),
             grant_type: 'authorization_code',
-            client_id: 'cf8ea8f610404652be1d3f61a459b1c9',
-            client_secret: 'tMpJf/JwlddzQSzfuPr1cBDfTvRCMN2VdzzabfSO6bk=',
-            redirect_uri: 'http://localhost:3000/receive',
+            client_id: process.env.REACT_APP_CLIENT_ID,
+            client_secret: process.env.REACT_APP_CLIENT_SECRET,
+            redirect_uri: process.env.REACT_APP_API_URL + 'receive',
             scope: 'UserInfo DataRead AccountDebit'
         }
         const options = {
