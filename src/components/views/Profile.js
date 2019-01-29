@@ -1,9 +1,8 @@
-import React, { Component } from 'react'
-import { IPService } from '../../service/IPService'
-
+import React, {Component} from 'react'
+import {IPService} from '../../service/IPService'
 export default class Profile extends Component {
 
-    constructor (props) {
+    constructor(props) {
         super(props)
         this.state = {
             dataSources: [],
@@ -19,13 +18,14 @@ export default class Profile extends Component {
         }
     }
 
-    componentDidMount () {
-        let self = this
+    componentDidMount() {
+        let self = this;
+        this.state.service.refresh();
         this.state.service.getUserInfo((res) => self.setState({user: JSON.parse(res)}))
         this.state.service.getDataSources((res) => self.setState({dataSources: res}))
     }
 
-    render () {
+    render() {
         const dataSourceItems = this.state.dataSources.map((source) =>
             <li key={source.Name.DisplayName}>
                 <p><b>{source.Name.DisplayName}</b></p>
@@ -33,7 +33,7 @@ export default class Profile extends Component {
                 <p>RunningStatus: {source.Status.RunningStatus}</p>
                 <p>SupportedFeatures:
                     {source.SupportedFeatures}
-                    </p>
+                </p>
             </li>
         );
 

@@ -1,69 +1,58 @@
-import { AuthService } from '../../service/AuthService'
-import React, { Component } from 'react'
-import axios from 'axios'
-import qs from 'qs'
+import {AuthService} from '../../service/AuthService';
+import React, {Component} from 'react';
+import axios from 'axios';
+import qs from 'qs';
+import {IPService} from "../../service/IPService";
 
 export default class ReceiveFromIP extends Component {
 
-    constructor (props) {
-        super(props)
+    constructor(props) {
+        super(props);
         this.state = {
             isAuthenticated: false,
-        }
+            service: new IPService()
+        };
     }
 
-    componentWillMount () {
+    componentWillMount() {
         if (AuthService.isLoggedIn()) {
-            this.setState({isAuthenticated: true})
+            this.setState({isAuthenticated: true});
         } else {
-            this.fetchToken()
+            this.fetchToken();
         }
     }
 
-    fetchToken () {
-        let self = this
+    fetchToken() {
+        let self = this;
 
-        const url = process.env.REACT_APP_IP_BASE_URL + process.env.REACT_APP_IP_TOKEN_URL
-        const data = {
-            code: window.location.search.slice(6),
-            grant_type: 'authorization_code',
-            client_id: process.env.REACT_APP_CLIENT_ID,
-            client_secret: process.env.REACT_APP_CLIENT_SECRET,
-            redirect_uri: process.env.REACT_APP_API_URL + 'receive',
-            scope: 'UserInfo DataRead AccountDebit'
-        }
-        const options = {
-            method: 'POST',
-            headers: {'content-type': 'application/x-www-form-urlencoded'},
-            data: qs.stringify(data),
-            url
-        }
-        axios(options).then((res) => {
-            self.setState({isAuthenticated: true})
-            ReceiveFromIP.saveToken(res.data.access_token, self)
-        })
+        this.state.service.fetchToken(window.location.search.slice(6), (response) => {
+            self.setState({isAuthenticated: true});
+            ReceiveFromIP.saveToken(response.access_token);
+        });
+
+        return;
     }
 
-    static saveToken (token, self) {
-        AuthService.logIn(token)
+    static saveToken(token) {
+        AuthService.logIn(token);
     }
 
-    render () {
-        const isAuthenticated = this.state.isAuthenticated
-        let message
+    render() {
+        const isAuthenticated = this.state.isAuthenticated;
+        let message;
 
         if (isAuthenticated) {
             message = (
                 <div>
                     You have logged in!
                 </div>
-            )
+            );
         } else {
             message = (
                 <div>
                     Authenticating...
                 </div>
-            )
+            );
         }
 
         return (
@@ -76,6 +65,6 @@ export default class ReceiveFromIP extends Component {
                     </div>
                 </div>
             </section>
-        )
+        );
     }
 }

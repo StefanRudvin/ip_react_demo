@@ -40,7 +40,8 @@ export default class Graphs extends Component {
     }
 
     componentWillMount () {
-        let self = this
+        let self = this;
+        this.state.service.refresh();
         this.state.service.getDataSources((res) => self.setState({dataSources: res}))
     }
 

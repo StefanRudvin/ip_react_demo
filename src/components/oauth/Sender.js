@@ -1,7 +1,21 @@
-import { OauthSender } from 'react-oauth-flow';
 import React, { Component } from 'react';
+import {IPService} from "../../service/IPService";
+import {OauthSender} from "react-oauth-flow";
 
 export default class SendToIP extends Component {
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            service: new IPService()
+        }
+    }
+
+    buildAuthUrl () {
+        console.log(this.state.service.getAuthUrl());
+        return this.state.service.getAuthUrl();
+    }
+
     render() {
         return (
             <section className="hero is-dark">
@@ -10,16 +24,7 @@ export default class SendToIP extends Component {
                         <h1 className="title">
                             Login
                         </h1>
-                        <OauthSender
-                            authorizeUrl={process.env.REACT_APP_IP_BASE_URL + process.env.REACT_APP_IP_AUTH_URL}
-                            clientId={encodeURIComponent(process.env.REACT_APP_CLIENT_ID)}
-                            redirectUri={process.env.REACT_APP_API_URL + 'receive'}
-                            args={{
-                                'scope':
-                                    'UserInfo DataRead AccountDebit'
-                            }}
-                            render={({ url }) => <a href={url} className="button is-link">Connect to IntelligentPlant</a>}
-                        />
+                        <a href={this.buildAuthUrl()} className="button is-link">Connect to IntelligentPlant</a>
                     </div>
                 </div>
             </section>

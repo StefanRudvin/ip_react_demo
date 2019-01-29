@@ -1,13 +1,13 @@
-import React, { Component } from 'react'
-import { hubConnection } from 'signalr-no-jquery'
-import { AuthService } from '../../service/AuthService'
-import { IPService } from '../../service/IPService'
+import React, {Component} from 'react';
+import {hubConnection} from 'signalr-no-jquery';
+import {AuthService} from '../../service/AuthService';
+import {IPService} from '../../service/IPService';
 import swal from 'sweetalert';
 
 export default class RealTime extends Component {
 
-    constructor (props) {
-        super(props)
+    constructor(props) {
+        super(props);
         this.state = {
             service: new IPService(),
             token: '',
@@ -18,96 +18,103 @@ export default class RealTime extends Component {
             historicalData: [],
             sourceDropdownOpen: false,
             tagDropdownOpen: false,
-        }
+        };
     }
 
-    componentWillMount () {
-        this.setState({token: AuthService.getToken()})
+    componentWillMount() {
+        this.setState({token: AuthService.getToken()});
 
-        let self = this
-        this.state.service.getDataSources((res) => self.setState({dataSources: res}))
+        let self = this;
+        this.state.service.refresh();
+        this.state.service.getDataSources((res) => self.setState({dataSources: res}));
 
-        this.getCurrentSourceData(this.state.currentSourceName)
+        this.getCurrentSourceData(this.state.currentSourceName);
     }
 
-    toggleSourceDropDown () { this.setState({sourceDropdownOpen: !this.state.sourceDropdownOpen}) }
-
-    toggleTagDropDown () { this.setState({tagDropdownOpen: !this.state.tagDropdownOpen}) }
-
-    setAndGetCurrentSourceData (qualifiedName) {
-        this.setState({currentSourceName: qualifiedName})
-        this.setState({currentTagName: ""})
-        this.getCurrentSourceData(qualifiedName)
-        this.toggleSourceDropDown()
+    toggleSourceDropDown() {
+        this.setState({sourceDropdownOpen: !this.state.sourceDropdownOpen});
     }
 
-    setAndGetCurrentTagData (tagName) {
-        this.toggleTagDropDown()
+    toggleTagDropDown() {
+        this.setState({tagDropdownOpen: !this.state.tagDropdownOpen});
+    }
+
+    setAndGetCurrentSourceData(qualifiedName) {
+        this.setState({currentSourceName: qualifiedName});
+        this.setState({currentTagName: ""});
+        this.getCurrentSourceData(qualifiedName);
+        this.toggleSourceDropDown();
+    }
+
+    setAndGetCurrentTagData(tagName) {
+        this.toggleTagDropDown();
 
         this.setState({
             currentTagName: tagName
         }, () => {
-            this.refreshSignalR()
-        })
+            this.refreshSignalR();
+        });
     }
 
-    getCurrentSourceData (qualifiedName) {
-        let self = this
-        this.state.service.getDataSource(qualifiedName, (res) => self.setState({currentSourceData: res}))
+    getCurrentSourceData(qualifiedName) {
+        let self = this;
+        this.state.service.getDataSource(qualifiedName, (res) => self.setState({currentSourceData: res}));
     }
 
-    refreshSignalR () {
-        let self = this
+    refreshSignalR() {
+        let self = this;
         let options = {
             'EnableJSONP': true,
             'HubConfiguration': true
-        }
+        };
 
-        const connection = hubConnection('https://appstore.intelligentplant.com/gestalt/', options)
-        const hubProxy = connection.createHubProxy('realTimeDataHub')
+        const connection = hubConnection('https://appstore.intelligentplant.com/gestalt/', options);
+        const hubProxy = connection.createHubProxy('realTimeDataHub');
 
-        connection.url = 'https://appstore.intelligentplant.com/gestalt/signalr'
-        connection.qs = {'access_token': this.state.token}
+        connection.url = 'https://appstore.intelligentplant.com/gestalt/signalr';
+        connection.qs = {'access_token': this.state.token};
 
         hubProxy.on('valuesReceived', function (sourceName, tagValues) {
-            console.log(sourceName)
-            console.log(tagValues)
-            swal("New real time value for " + sourceName + ":", tagValues[0].TextValue)
-        })
+            console.log(sourceName);
+            console.log(tagValues);
+            swal("New real time value for " + sourceName + ":", tagValues[0].TextValue);
+        });
 
         connection.start({json: true})
             .done(function () {
-                console.log('Now connected, connection ID=' + connection.id)
-                self.invokeServerMethods(self, hubProxy)
+                console.log('Now connected, connection ID=' + connection.id);
+                self.invokeServerMethods(self, hubProxy);
             })
-            .fail(function (error) { console.log('Could not connect' + error) })
+            .fail(function (error) {
+                console.log('Could not connect' + error);
+            });
     }
 
-    invokeServerMethods (self, hubProxy) {
+    invokeServerMethods(self, hubProxy) {
         hubProxy.invoke('CreateSubscription', self.state.currentSourceName, '00:00:10').done(function () {
-            console.log('Invocation of CreateSubscription succeeded')
+            console.log('Invocation of CreateSubscription succeeded');
         }).fail(function (error) {
-            console.log('Invocation of CreateSubscription failed. Error: ' + error)
-        })
+            console.log('Invocation of CreateSubscription failed. Error: ' + error);
+        });
 
         hubProxy.invoke('AddTagsToSubscription', 'IP Datasource',
             {
-                [self.state.currentSourceName] : [
+                [self.state.currentSourceName]: [
                     self.state.currentTagName
                 ]
             }
         ).done(function () {
-            console.log('Invocation of AddTagsToSubscription succeeded')
+            console.log('Invocation of AddTagsToSubscription succeeded');
         }).fail(function (error) {
-            console.log('Invocation of AddTagsToSubscription failed. Error: ' + error)
-        })
+            console.log('Invocation of AddTagsToSubscription failed. Error: ' + error);
+        });
     }
 
-    componentDidMount () {
-        this.refreshSignalR()
+    componentDidMount() {
+        this.refreshSignalR();
     }
 
-    render () {
+    render() {
 
         const datasourceItems = this.state.dataSources.map((source) =>
             <div key={source.Name.QualifiedName}>
@@ -116,7 +123,7 @@ export default class RealTime extends Component {
                 </a>
                 <hr className="dropdown-divider"/>
             </div>
-        )
+        );
 
         const tagItems = this.state.currentSourceData.map((tag) =>
             <div key={tag.Id}>
@@ -125,7 +132,7 @@ export default class RealTime extends Component {
                 </a>
                 <hr className="dropdown-divider"/>
             </div>
-        )
+        );
 
         return (
             <div>
@@ -183,6 +190,6 @@ export default class RealTime extends Component {
                     </div>
                 </section>
             </div>
-        )
+        );
     }
 }
