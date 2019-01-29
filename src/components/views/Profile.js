@@ -20,7 +20,6 @@ export default class Profile extends Component {
 
     componentDidMount() {
         let self = this;
-        this.state.service.refresh();
         this.state.service.getUserInfo((res) => self.setState({user: JSON.parse(res)}))
         this.state.service.getDataSources((res) => self.setState({dataSources: res}))
     }

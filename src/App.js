@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './css/App.scss';
 import AppRouter from './AppRouter'
 import 'bulma/css/bulma.css'
-import './service/TokenInterceptor'
 
 class App extends Component {
   render() {

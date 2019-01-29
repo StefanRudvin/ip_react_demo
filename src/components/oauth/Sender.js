@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {IPService} from "../../service/IPService";
-import {OauthSender} from "react-oauth-flow";
 
 export default class SendToIP extends Component {
 
@@ -12,7 +11,6 @@ export default class SendToIP extends Component {
     }
 
     buildAuthUrl () {
-        console.log(this.state.service.getAuthUrl());
         return this.state.service.getAuthUrl();
     }
 

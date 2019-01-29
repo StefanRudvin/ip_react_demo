@@ -28,6 +28,7 @@ export default class ReceiveFromIP extends Component {
         this.state.service.fetchToken(window.location.search.slice(6), (response) => {
             self.setState({isAuthenticated: true});
             ReceiveFromIP.saveToken(response.access_token);
+            self.state.service.refreshToken();
         });
 
         return;

@@ -1,4 +1,4 @@
-import IntelligentPlantApi from 'intelligentplantnodeapi';
+import IntelligentPlantApi from '@intelligentplant/app-store-api';
 
 // Singleton holder
 let _instance = null;
@@ -10,10 +10,6 @@ export class IPService {
         }
         _instance = this;
 
-        this.refresh();
-    }
-
-    refresh() {
         this.IntelligentPlantApi = new IntelligentPlantApi({
             client_id: process.env.REACT_APP_CLIENT_ID,
             client_secret: process.env.REACT_APP_CLIENT_SECRET,
@@ -21,6 +17,11 @@ export class IPService {
             redirect_uri: process.env.REACT_APP_API_URL + 'receive',
             scope: 'UserInfo DataRead AccountDebit',
         });
+
+        this.refreshToken();
+    }
+
+    refreshToken() {
         this.IntelligentPlantApi.set_access_token(localStorage.getItem('token'));
     }
 

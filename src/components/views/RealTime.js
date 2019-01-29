@@ -25,7 +25,6 @@ export default class RealTime extends Component {
         this.setState({token: AuthService.getToken()});
 
         let self = this;
-        this.state.service.refresh();
         this.state.service.getDataSources((res) => self.setState({dataSources: res}));
 
         this.getCurrentSourceData(this.state.currentSourceName);
