@@ -4,6 +4,8 @@ This is an application built to act as a starting point for [Intelligent Plant](
 
 It uses the [Intelligent Plant API Module](https://github.com/intelligentplant/js-app-store-api) to fetch user data, datasources and tags. Real-time data is handled via SignalR.
 
+Security wise, this app is not ready for production unless the following concerns are tackled: 1. Keep authorization token somewhere other than local storage 2. Use the Proof Key for Code Exchange for oAuth with passing of the state and a unique value.
+
 The auth token is stored in local storage, which to be moved elsewhere for production due to security concerns.
 
 ## Installation:
