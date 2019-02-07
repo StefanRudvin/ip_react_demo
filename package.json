@@ -6,7 +6,6 @@
     "@intelligentplant/app-store-api": "git+https://github.com/intelligentplant/js-app-store-api.git",
     "@intelligentplant/data-core-types": "^1.0.5",
     "EventEmitter": "^1.0.0",
-    "axios": "^0.18.0",
     "bulma": "^0.7.2",
     "chart.js": "^2.7.3",
     "install": "^0.12.2",
