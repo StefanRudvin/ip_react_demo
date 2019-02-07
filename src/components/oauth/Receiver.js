@@ -1,7 +1,5 @@
 import {AuthService} from '../../service/AuthService';
 import React, {Component} from 'react';
-import axios from 'axios';
-import qs from 'qs';
 import {IPService} from "../../service/IPService";
 
 export default class ReceiveFromIP extends Component {
@@ -24,7 +22,6 @@ export default class ReceiveFromIP extends Component {
 
     fetchToken() {
         let self = this;
-
         this.state.service.fetchToken(window.location.search.slice(6), (response) => {
             self.setState({isAuthenticated: true});
             ReceiveFromIP.saveToken(response.access_token);
