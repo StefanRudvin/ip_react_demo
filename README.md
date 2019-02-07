@@ -2,15 +2,15 @@
 
 This is an application built to act as a starting point for [Intelligent Plant](https://appstore.intelligentplant.com/) applications built with [React](https://reactjs.org/).
 
-It uses oAuth to authenticate via Intelligent Plant, and Intelligent Plant APIs to fetch user data, datasources and tags. Real-time data is handled via SignalR.
+It uses the [Intelligent Plant API Module](https://github.com/intelligentplant/js-app-store-api) to fetch user data, datasources and tags. Real-time data is handled via SignalR.
 
-The current http client is [Axios](https://github.com/axios/axios), but it can be changed at `src/service/IPService` and `src/service/TokenInterceptor`.
-
-The auth token is stored in local storage, which to be moved elsewhere when building for production due to security concerns.
+The auth token is stored in local storage, which to be moved elsewhere for production due to security concerns.
 
 ## Installation:
 
-* Copy your IntelligentPlant `Client ID` and `Client Secret` to `.env.example` and rename it to `.env`
+* Start by creating a new developer account at https://appstore.intelligentplant.com/, and fetching your `CLIENT_ID` and `CLIENT_SECRET`
+
+* Copy your IntelligentPlant `CLIENT_ID` and `CLIENT_SECRET` to `.env.example` and rename it to `.env`
 
 * Add `http://localhost:3000/receive` to your Authorized Redirect Urls in your IntelligentPlant application
 
